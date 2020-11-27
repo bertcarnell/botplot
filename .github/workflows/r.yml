@@ -31,5 +31,5 @@ jobs:
         shell: Rscript {0}
       - name: Run Script
         run: |
-          Rscript -f "R/main.R"
+          Rscript R/main.R
 
