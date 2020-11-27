@@ -25,11 +25,15 @@ jobs:
         uses: r-lib/actions/setup-r@40eb311abcab5a76118b55cbc8d8484108185b04
         with:
           r-version: ${{ matrix.r-version }}
+      - name: Set up Pandoc
+        uses: r-lib/actions/setup-pandoc@v1
       - name: Install dependencies
         run: |
           install.packages(c("rmarkdown", "knitr", "ggplot", "reshape2"))
         shell: Rscript {0}
       - name: Run Script
         run: |
+          echo "# Test" | pandoc --version
+          echo "# Test" | Rscript --version
           Rscript R/main.R
 
