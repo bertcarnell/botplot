@@ -36,4 +36,8 @@ jobs:
           echo "# Test" | pandoc --version
           echo "# Test" | Rscript --version
           Rscript R/main.R
-
+      - name: Deploy to gh-pages Branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
