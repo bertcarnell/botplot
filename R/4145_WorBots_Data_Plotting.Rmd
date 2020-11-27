@@ -1,0 +1,154 @@
+---
+title: "Example Data Analysis"
+author: "4145 WorBots"
+date: "March 6, 2020"
+output: html_document
+params:
+  data_file: "default.csv"
+---
+
+```{r setup, include=FALSE}
+# Enter the data file name here
+#   if the data file is not located in the same directory as this .Rmd file
+#   then use data_file <- file.path("path","to","file","robotdata3.csv")
+data_file <- params$data_file
+
+# import necessary packages
+require(ggplot2)
+require(reshape2)
+
+# read the csv
+#   since the first row does not have column names for all columns, skip the first
+#   row, then read it back in, and add column names
+X <- read.csv(data_file, header = FALSE, skip = 1, 
+              stringsAsFactors = FALSE)
+Xnames <- read.csv(data_file, header = FALSE, nrows = 1, 
+                   stringsAsFactors = FALSE)
+# there is a missing column name between inverse and PIDOutput
+#   first check to see if the names are right
+stopifnot(Xnames[1,14] == " inverse")
+stopifnot(Xnames[1,15] == " PIDOutput")
+Xnames <- c(unlist(Xnames[1,1:14]), 
+            "inverse2", 
+            unlist(Xnames[1,15:length(Xnames)]))
+# add extra names for the missing columns
+Xnames <- c(trimws(Xnames), 
+            paste0("dummy", 1:(ncol(X) - length(Xnames))))
+# if there are duplicated names, add a number
+if (any(duplicated(Xnames)))
+{
+  ind <- which(duplicated(Xnames))
+  Xnames[ind] <- paste0(Xnames[ind], "_", 1:length(ind))
+}
+names(X) <- Xnames
+
+```
+
+## Univariate Plots
+
+### Left and Right Current
+
+This is awesome
+
+```{r left_current, echo=FALSE}
+plot_data <- subset(X, select = c("time", "leftCurrent", "rightCurrent"))
+plot_data <- melt(plot_data, id = "time", value.name = "Current")
+
+ggplot(data = plot_data, aes(x = time, y = Current, col = variable)) +
+  geom_point() +
+  geom_line() + 
+  labs(x = "Time (Units)", y = "Current (Units)", col = "Side")
+
+ggplot(data = plot_data, aes(x = time, y = Current, group = variable)) +
+  facet_grid(variable ~ .) +
+  geom_point() +
+  geom_line() + 
+  labs(x = "Time (Units)", y = "Current (Units)")
+
+plot_data <- subset(X, select = c("time", "AmpsL", "AmpsR"))
+plot_data <- melt(plot_data, id = "time", value.name = "Current")
+
+ggplot(data = plot_data, aes(x = time, y = Current, group = variable)) +
+  facet_grid(variable ~ .) +
+  geom_point() +
+  geom_line() + 
+  labs(x = "Time (Units)", y = "Current (Units)")
+
+```
+
+### Index Belt Amps
+
+```{r index_belt, echo=FALSE}
+ggplot(X, aes(x = time, y = indexBeltAmps)) +
+  geom_point() +
+  geom_line() +
+  labs(x = "Time (Units)", y = "Index Belt (Amps)")
+```
+
+### Ball Detection
+
+```{r ball_detection, echo=FALSE}
+plot_data <- subset(X, select = c("time", "ball1Detected", "ball2Detected",
+                                  "ball3Detected", "ball5Detected"))
+plot_data <- melt(plot_data, id = "time", value.name = "Detection")
+ggplot(plot_data, aes(x = time, y = Detection, group = variable)) +
+  facet_grid(variable ~ .) +
+  geom_point() +
+  geom_line()
+
+```
+
+### Fly Wheel
+
+```{r fly_wheel, echo=FALSE}
+ggplot(X, aes(x = time, y = flywheelRPM)) +
+  geom_point() + 
+  geom_line() +
+  labs(x = "Time (Units)", y = "Fly Wheel (RPM)")
+
+ggplot(X, aes(x = time, y = flywheelRPM, col = ball1Detected, group = ball1Detected)) +
+  geom_point() + 
+  labs(x = "Time (Units)", y = "Fly Wheel (RPM)")
+
+ggplot(X, aes(x = time, y = flywheelRPM, col = ball3Detected, group = ball3Detected)) +
+  geom_point() + 
+  labs(x = "Time (Units)", y = "Fly Wheel (RPM)")
+```
+
+## Bivariate
+
+### Targeting
+
+```{r targeting, echo = FALSE}
+ggplot(X, aes(x = targetX, y = targetY, col = targetV)) +
+  geom_point() +
+  labs(x = "Target X", y = "Target Y", col = "Target Velocity")
+```
+
+### Position
+
+```{r position, echo = FALSE}
+ggplot(X, aes(x =  left_velocity_ticks_per_100ms, 
+              y =  right_velocity_ticks_per_100ms)) +
+  geom_point() +
+  geom_line() +
+  labs(x = "Left Velocity (Ticks / 100ms)", y = "Right Velocity (Ticks / 100ms)")
+
+ggplot(X, aes(x = time, y = gyro_heading)) +
+  geom_point() +
+  geom_line() +
+  labs(x = "Time (Units)", y = "Gyro Heading (Units)")
+```
+
+## All Plots vs Time
+
+```{r all_plots_vs_time, echo=FALSE}
+for (i in 1:ncol(X))
+{
+  g <- ggplot(X, aes_string(x = "time", y = names(X)[i])) +
+    geom_point() +
+    labs(x = "Time (Units)", y = names(X)[i])
+  plot(g)
+}
+
+```
