@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up R ${{ matrix.r-version }}
-        uses: r-lib/actions/setup-r
+        uses: r-lib/actions/setup-r@40eb311abcab5a76118b55cbc8d8484108185b04
         with:
           r-version: ${{ matrix.r-version }}
       - name: Install dependencies
