@@ -29,7 +29,7 @@ jobs:
         uses: r-lib/actions/setup-pandoc@v1
       - name: Install dependencies
         run: |
-          install.packages(c("rmarkdown", "knitr", "ggplot", "reshape2"))
+          install.packages(c("rmarkdown", "knitr", "ggplot2", "reshape2"))
         shell: Rscript {0}
       - name: Run Script
         run: |
