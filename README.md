@@ -1,5 +1,10 @@
 # botplot
+
 A demo website to automatically plot data from a high school warbot using R
+
+![R](https://github.com/bertcarnell/botplot/workflows/R/badge.svg)
+
+Visit [here](https://bertcarnell.github.io/botplot/)
 
 ## Quick Start
 
