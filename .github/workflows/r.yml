@@ -1,12 +1,4 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-#
-# See https://github.com/r-lib/actions/tree/master/examples#readme for
-# additional example workflows available for the R community.
-
-name: R
+name: Build Plot Site
 
 on:
   push:
@@ -28,14 +20,10 @@ jobs:
       - name: Set up Pandoc
         uses: r-lib/actions/setup-pandoc@v1
       - name: Install dependencies
-        run: |
-          install.packages(c("rmarkdown", "knitr", "ggplot2", "reshape2"))
+        run: install.packages(c("rmarkdown", "knitr", "ggplot2", "reshape2"))
         shell: Rscript {0}
       - name: Run Script
-        run: |
-          echo "# Test" | pandoc --version
-          echo "# Test" | Rscript --version
-          Rscript R/main.R
+        run: Rscript R/main.R
       - name: Deploy to gh-pages Branch
         uses: peaceiris/actions-gh-pages@v3
         with:

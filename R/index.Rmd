@@ -1,7 +1,7 @@
 ---
-title: "botplot Index"
+title: "botplot: Warbot Plot Index"
 author: "Rob Carnell"
-date: "November 26, 2020"
+date: '`r Sys.time()`'
 output: html_document
 params:
   data_files: c("default.csv", "default.csv")

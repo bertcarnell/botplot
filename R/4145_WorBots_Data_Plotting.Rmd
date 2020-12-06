@@ -1,8 +1,10 @@
 ---
 title: "Example Data Analysis"
 author: "4145 WorBots"
-date: "March 6, 2020"
-output: html_document
+date: '`r Sys.time()`'
+output: 
+  html_document:
+    toc: TRUE
 params:
   data_file: "default.csv"
 ---

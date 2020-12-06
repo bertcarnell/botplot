@@ -8,8 +8,19 @@ Visit [here](https://bertcarnell.github.io/botplot/)
 
 ## Quick Start
 
+1. `git pull` or right click -> TortoiseGit -> Pull
+1. Copy a new `.csv` data file to the `data` directory
+    - avoid committing a `.xlsx` file or other binary format to `git`
+1. `git add file.csv` or right click -> TortoiseGit -> Add
+1. Check the status of files to be committed using `git status` or the icon overlays
+1. `git commit -m "my commit message about file.csv"` or right click -> Git Commit
+1. `git push` or right click -> ToroiseGit -> Push
+1. Wait a few minutes for the project to build and deploy
+1. You can check on the progress of the build [here](https://github.com/bertcarnell/botplot/actions)
+    - Errors will be shown in build logs
+1. Finally, view the results [here](https://bertcarnell.github.io/botplot/)
 
-## Development
+## Development Environment
 
 - **[R Project](https://www.r-project.org/)**
     - R is a free software environment for statistical computing and graphics.
@@ -24,6 +35,12 @@ Visit [here](https://bertcarnell.github.io/botplot/)
     to handle everything from small to very large projects with speed and efficiency.
     - [Download git](https://git-scm.com/downloads)
     - Install git according to the directions for your operating system
+
+For Windows users, you can also use **TortoiseGit**
+
+- **[TortoiseGit](https://tortoisegit.org/)**
+    - TortoiseGit provides overlay icons showing the file status, a powerful context menu for Git and much more!
+	- [Download tortoisegit](https://tortoisegit.org/download/)
     
 ### R Project
 
