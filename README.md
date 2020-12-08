@@ -8,6 +8,8 @@ Visit [here](https://bertcarnell.github.io/botplot/)
 
 ## Quick Start
 
+### Add a New CSV
+
 1. `git pull` or right click -> TortoiseGit -> Pull
 1. Copy a new `.csv` data file to the `data` directory
     - avoid committing a `.xlsx` file or other binary format to `git`
@@ -19,6 +21,15 @@ Visit [here](https://bertcarnell.github.io/botplot/)
 1. You can check on the progress of the build [here](https://github.com/bertcarnell/botplot/actions)
     - Errors will be shown in build logs
 1. Finally, view the results [here](https://bertcarnell.github.io/botplot/)
+
+### Delete a CSV
+
+1. `git pull` or right click -> TortoiseGit -> Pull
+1. `git rm file.csv` or right click -> TortoiseGit -> Delete
+    - You must use the git system to delete the file.  Simply deleteing the file in the normal way will not remove it from the repository.
+1. Check the status of files to be committed using `git status` or the icon overlays
+1. Commit, Push, and view the results as above.
+
 
 ## Development Environment
 
@@ -48,14 +59,14 @@ For Windows users, you can also use **TortoiseGit**
 
 - Open `botplot.Rproj`
 
-### Make Changes to How CSV is Parsed?
+### Make changes to how a CSV is parsed
 
 The most likely changes that need to be made are to the way that a CSV file
 is parsed.  These changes are going to be made in `4145_Worbots_data_plotting.Rmd`.  If changes
 are made here, then care must be taken to make the code backward compatible with older plots,
 or delete the older plot data.
 
-In RStudio,
+**In RStudio,**
 
 - Open `R/4145_Worbots_data_plotting.Rmd`
 - locate the `setup` chunk which includes the data cleaning that had to be done 
